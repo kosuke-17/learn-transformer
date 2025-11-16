@@ -1,1 +1,5 @@
 uv.lock
+src/transformer_text_gen/__pycache__
+src/kinokobooks/*
+src/transformer_text_gen/corpus/corpus.txt
+src/transformer_text_gen/model/*
