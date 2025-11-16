@@ -1,1 +1,3 @@
-fitst commit
+```bash
+uv run <ファイル名>
+```
