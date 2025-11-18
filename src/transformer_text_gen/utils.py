@@ -77,6 +77,10 @@ def text_to_ids(text, add_new=False):
         ids.append(token_id)
     return ids
 
+def pad_sequence(ids, seq_len, pad_id=PAD):
+    """シーケンスをパディングする"""
+    return ids + [pad_id] * (seq_len - len(ids))
+
 def save_json(data, file_path):
     """データをJSON形式で保存する"""
     import json
@@ -87,3 +91,15 @@ def load_json(file_path):
     import json
     with open(file_path, "r", encoding="utf-8") as f:
         return json.load(f)
+
+def ids_to_text(ids, skip_special=True, split_mark=""):
+    """IDリストをテキストに変換する"""
+    result = []
+    for id_ in ids:
+        if skip_special and id_ in [UNK, SOS, EOS, PAD]:
+            continue
+        if str(id_) in id2token:
+            result.append(id2token[str(id_)])
+        else:
+            result.append("<UNK>")
+    return split_mark.join(result)
