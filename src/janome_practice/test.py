@@ -2,6 +2,9 @@ from janome.tokenizer import Tokenizer
 
 sample_text = "思考力があれば、どんなことでも解決できる。"
 
+# 形態素解析とは文章を形態素に分割する処理のこと。
+# 英語はスペースで区切られているため、単語を簡単に抽出できる。
+# 日本語は単語がスペースで区切られていないため、形態素解析を行う必要がある。
 tokenizer = Tokenizer()
 
 tokens = list(tokenizer.tokenize(sample_text))
