@@ -5,6 +5,7 @@ import torch
 import torch.nn as nn
 
 from config import SEQ_LENGTH
+from utils import *
 
 # CUDA/MPSの使用確認
 device = torch.device("cpu")
