@@ -1,8 +1,10 @@
 import os
+
 # 正規表現のためにインポート
 # https://docs.python.org/ja/3/library/re.html
 import re
-from config import *
+
+from config import CORPUS_DIR, DIR_CORPUS_SOURCE, DIR_MODEL, FILE_CORPUS
 
 # コーパスとモデルのフォルダを作成
 
@@ -23,13 +25,15 @@ for root, dirs, files in os.walk(DIR_CORPUS_SOURCE):
             text = f.read()
             # マークダウンのコードブロックを削除
             text = re.sub(r"```.*?```", "", text, flags=re.DOTALL)
-            text = text.replace("。", "。\n") # 改行を追加
-            text = text.replace("?", "?\n") # 改行を追加
-            text = text.replace("!", "!\n") # 改行を追加
-            text = re.sub("\*\*|　", "", text) # 太字を削除
-            text = re.sub(r"(\(.+?\)|（.+?）)", "", text) # ()を削除
-            text = re.sub(r"\[.+?\]", "", text) # []を削除
-            text = re.sub(r"(https?|mailto)\:[a-zA-Z0-9~_/@\-\.\?]+", "", text) # URLを削除
+            text = text.replace("。", "。\n")  # 改行を追加
+            text = text.replace("?", "?\n")  # 改行を追加
+            text = text.replace("!", "!\n")  # 改行を追加
+            text = re.sub("\*\*|　", "", text)  # 太字を削除
+            text = re.sub(r"(\(.+?\)|（.+?）)", "", text)  # ()を削除
+            text = re.sub(r"\[.+?\]", "", text)  # []を削除
+            text = re.sub(
+                r"(https?|mailto)\:[a-zA-Z0-9~_/@\-\.\?]+", "", text
+            )  # URLを削除
             # 一行ずつ処理
             for line in text.splitlines():
                 # 文字列の両端にある空白を取り除く

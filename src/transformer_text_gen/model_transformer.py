@@ -1,11 +1,11 @@
 """Transformerモデルを定義する"""
+
 import torch
+
 # https://docs.pytorch.org/docs/stable/nn.html
 # ニューラルネットワークを構築するためのモジュール
 import torch.nn as nn
-
 from config import SEQ_LENGTH
-from utils import *
 
 # CUDA/MPSの使用確認
 device = torch.device("cpu")
@@ -15,8 +15,10 @@ elif torch.backends.mps.is_available():
     device = torch.device("mps")
 print(f"使用デバイス: {device}")
 
+
 class TransformerModel(nn.Module):
     """Transformerモデル"""
+
     def __init__(
         self,
         vocab_size: int,
@@ -33,16 +35,14 @@ class TransformerModel(nn.Module):
         # 精度を向上させるためドロップアウト層を追加
         self.dropout = nn.Dropout(dropout)
         encoder_layer = nn.TransformerEncoderLayer(
-            d_model=embed_dim, # 入力の次元数
-            nhead=num_heads, # ヘッド数
-            dim_feedforward=embed_dim * 4, # FFNの次元数
-            dropout=dropout, # ドロップアウト
-            batch_first=True, # バッチサイズを最初にしてい
+            d_model=embed_dim,  # 入力の次元数
+            nhead=num_heads,  # ヘッド数
+            dim_feedforward=embed_dim * 4,  # FFNの次元数
+            dropout=dropout,  # ドロップアウト
+            batch_first=True,  # バッチサイズを最初にしてい
         )
         # Transformer Encoderを生成
-        self.transformer = nn.TransformerEncoder(
-            encoder_layer, num_layers
-        )
+        self.transformer = nn.TransformerEncoder(encoder_layer, num_layers)
         # 出力前の正規化と出力層
         self.layer_norm = nn.LayerNorm(embed_dim)
         self.fc = nn.Linear(embed_dim, vocab_size)
@@ -65,4 +65,3 @@ class TransformerModel(nn.Module):
         h = self.layer_norm(h)
         out = self.fc(h)
         return out
-        

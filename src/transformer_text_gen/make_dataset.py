@@ -1,6 +1,15 @@
 import random
-from config import *
-from utils import *
+
+from config import (
+    CORPUS_MAX_LINES,
+    FILE_CORPUS,
+    FILE_ID2TOKEN,
+    FILE_IDS,
+    FILE_TOKEN2ID,
+    SEQ_LENGTH,
+)
+from utils import EOS, SOS, id2token, save_json, text_to_ids, token2id
+
 
 # 単語辞書とIDリストからなるデータセットを作成
 def make_dataset():
@@ -10,7 +19,7 @@ def make_dataset():
         text = f.read()
         lines = text.splitlines()
         random.shuffle(lines)
-        lines = lines[:CORPUS_MAX_LINES] # コーパスの最大行数を超えないようにする
+        lines = lines[:CORPUS_MAX_LINES]  # コーパスの最大行数を超えないようにする
         for i, line in enumerate(lines):
             if i % 1000 == 0:
                 print(f"{i}/{len(lines)}行を処理しました")
@@ -25,9 +34,10 @@ def make_dataset():
     # トークン辞書の保存
     save_json(token2id, FILE_TOKEN2ID)
     save_json(id2token, FILE_ID2TOKEN)
-    print(f"データセットの作成が完了しました。 ")
+    print("データセットの作成が完了しました。 ")
     print(f"トークン数: {len(token2id)}")
     print(f"データ数: {len(result)}")
+
 
 if __name__ == "__main__":
     make_dataset()

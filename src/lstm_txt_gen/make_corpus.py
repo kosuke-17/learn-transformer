@@ -1,10 +1,14 @@
 """青空文庫のテキストをすべて結合して1つのテキストファイルにする"""
+
 import os
+
 # 正規表現のため
 import re
+
 from config import *
 
 authors = ["夏目漱石", "太宰治", "芥川竜之介", "宮沢賢治"]
+
 
 def enum_files(path):
     """指定したディレクトリ内のすべてのテキストファイルを列挙する"""
@@ -16,6 +20,7 @@ def enum_files(path):
             if file.endswith(".txt"):
                 # ファイルのパスを返す
                 yield os.path.join(root, file)
+
 
 def make_corpus():
     """青空文庫のテキストをすべて結合して1つのテキストファイルにする"""
@@ -44,9 +49,10 @@ def make_corpus():
                 continue
         print("コーパスの作成が完了しました。")
 
+
 def format_text(text):
     """青空文庫のテキストを整形する"""
-    text = text.replace("\r\n", "\n") # 改行コードをLFに変換
+    text = text.replace("\r\n", "\n")  # 改行コードをLFに変換
     # テキスト中に現れる記号についてを削除
     blocks = re.split("-{10,}\n", text)
     if len(blocks) >= 3:
@@ -62,6 +68,7 @@ def format_text(text):
     text = re.sub(r"\n+", "\n", text)  # 連続する改行を1つにまとめる
     text = re.sub(r"[｜|｜「」『』]", "", text)  # 記号を削除
     return text
+
 
 if __name__ == "__main__":
     make_corpus()

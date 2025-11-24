@@ -4,3 +4,4 @@ src/kinokobooks/*
 src/transformer_text_gen/corpus/corpus.txt
 src/transformer_text_gen/model/*
 src/lstm_txt_gen/corpus/*
+.mypy_cache/*
